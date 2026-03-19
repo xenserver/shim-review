@@ -97,3 +97,9 @@ mode is enabled, dom0 userspace can only use a restricted subset of hypercalls.
 An extensive audit of the entire Xen hypercall interface was performed to
 determine what was safe to allow. This restriction is implemented in
 [filter-hypercalls.patch](./kernel-patches/filter-hypercalls.patch).
+
+To avoid any issues where Xen loads a dom0 kernel with a hypercall filter built
+for different version of Xen (i.e. there is an ABI mismatch), the kernel
+exports an ELF note (XS_ELFNOTE_PRIVCMD_FILTERING) containing the ABI version
+it is built against. When loading the kernel, Xen refuses to load the dom0
+kernel if the ABI version does not match Xen's current ABI version.
