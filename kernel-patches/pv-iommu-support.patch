@@ -1,8 +1,8 @@
 diff --git a/arch/x86/include/asm/xen/hypercall.h b/arch/x86/include/asm/xen/hypercall.h
-index bba3a10f0cbd..ba25782e108b 100644
+index f82c315b82833..307308494cbaf 100644
 --- a/arch/x86/include/asm/xen/hypercall.h
 +++ b/arch/x86/include/asm/xen/hypercall.h
-@@ -49,6 +49,7 @@
+@@ -51,6 +51,7 @@
  #include <xen/interface/xen.h>
  #include <xen/interface/sched.h>
  #include <xen/interface/physdev.h>
@@ -10,7 +10,7 @@ index bba3a10f0cbd..ba25782e108b 100644
  #include <xen/interface/platform.h>
  #include <xen/interface/xen-mca.h>
  
-@@ -321,6 +322,12 @@ MULTI_fpu_taskswitch(struct multicall_entry *mcl, int set)
+@@ -329,6 +330,12 @@ MULTI_fpu_taskswitch(struct multicall_entry *mcl, int set)
  	trace_xen_mc_entry(mcl, 1);
  }
  
@@ -24,10 +24,10 @@ index bba3a10f0cbd..ba25782e108b 100644
  MULTI_update_va_mapping(struct multicall_entry *mcl, unsigned long va,
  			pte_t new_val, unsigned long flags)
 diff --git a/arch/x86/kernel/Makefile b/arch/x86/kernel/Makefile
-index 3269a0e23d3a..329b8aa011a5 100644
+index 0000325ab98f4..e6f6cdec23549 100644
 --- a/arch/x86/kernel/Makefile
 +++ b/arch/x86/kernel/Makefile
-@@ -59,7 +59,7 @@ obj-$(CONFIG_X86_64)	+= sys_x86_64.o
+@@ -60,7 +60,7 @@ obj-$(CONFIG_X86_64)	+= sys_x86_64.o
  obj-$(CONFIG_X86_ESPFIX64)	+= espfix_64.o
  obj-$(CONFIG_SYSFS)	+= ksysfs.o
  obj-y			+= bootflag.o e820.o
@@ -38,7 +38,7 @@ index 3269a0e23d3a..329b8aa011a5 100644
  obj-y			+= resource.o
 diff --git a/arch/x86/kernel/pci-dma-xen.c b/arch/x86/kernel/pci-dma-xen.c
 new file mode 100644
-index 000000000000..ee9e65049752
+index 0000000000000..ee9e650497525
 --- /dev/null
 +++ b/arch/x86/kernel/pci-dma-xen.c
 @@ -0,0 +1,184 @@
@@ -227,7 +227,7 @@ index 000000000000..ee9e65049752
 +	return 1;
 +}
 diff --git a/arch/x86/kernel/pci-dma.c b/arch/x86/kernel/pci-dma.c
-index f323d83e40a7..a3fe1dd1b801 100644
+index f323d83e40a70..a3fe1dd1b8019 100644
 --- a/arch/x86/kernel/pci-dma.c
 +++ b/arch/x86/kernel/pci-dma.c
 @@ -18,6 +18,9 @@
@@ -289,10 +289,10 @@ index f323d83e40a7..a3fe1dd1b801 100644
  		swiotlb_print_info();
  	} else {
 diff --git a/arch/x86/xen/xen-head.S b/arch/x86/xen/xen-head.S
-index a0ea285878db..ca5eec85c8e7 100644
+index 059f343da76d6..065483e98d016 100644
 --- a/arch/x86/xen/xen-head.S
 +++ b/arch/x86/xen/xen-head.S
-@@ -120,5 +120,6 @@ SYM_CODE_END(xen_cpu_bringup_again)
+@@ -181,5 +181,6 @@ SYM_FUNC_END(xen_hypercall_intel)
  		.long FEATURES_PV | FEATURES_PVH | FEATURES_DOM0)
  	ELFNOTE(Xen, XEN_ELFNOTE_LOADER,         .asciz "generic")
  	ELFNOTE(Xen, XEN_ELFNOTE_SUSPEND_CANCEL, .long 1)
@@ -300,7 +300,7 @@ index a0ea285878db..ca5eec85c8e7 100644
  
  #endif /*CONFIG_XEN */
 diff --git a/drivers/xen/Makefile b/drivers/xen/Makefile
-index d29daa998577..3095613f8134 100644
+index d29daa998577f..3095613f81349 100644
 --- a/drivers/xen/Makefile
 +++ b/drivers/xen/Makefile
 @@ -24,6 +24,7 @@ obj-$(CONFIG_XENFS)			+= xenfs/
@@ -312,7 +312,7 @@ index d29daa998577..3095613f8134 100644
  obj-$(CONFIG_XEN_PCI_STUB)	        += xen-pciback/
  obj-$(CONFIG_XEN_PRIVCMD)		+= xen-privcmd.o
 diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
-index 586a1673459e..9c7f5a9646cd 100644
+index 204ec1bcbd526..6d9f867602278 100644
 --- a/drivers/xen/balloon.c
 +++ b/drivers/xen/balloon.c
 @@ -74,6 +74,7 @@
@@ -342,7 +342,7 @@ index 586a1673459e..9c7f5a9646cd 100644
  	for (i = 0; i < size; i++) {
  		p = pfn_to_page(start_pfn + i);
 diff --git a/drivers/xen/biomerge.c b/drivers/xen/biomerge.c
-index 05a286d24f14..62594e79d2d6 100644
+index 05a286d24f148..62594e79d2d67 100644
 --- a/drivers/xen/biomerge.c
 +++ b/drivers/xen/biomerge.c
 @@ -3,15 +3,24 @@
@@ -373,7 +373,7 @@ index 05a286d24f14..62594e79d2d6 100644
  #else
  	/*
 diff --git a/drivers/xen/ioemu.c b/drivers/xen/ioemu.c
-index 7c89d11043b2..cd7c76dff93f 100644
+index 7c89d11043b20..cd7c76dff93f2 100644
 --- a/drivers/xen/ioemu.c
 +++ b/drivers/xen/ioemu.c
 @@ -83,4 +83,48 @@ int xen_ioemu_inject_msi(domid_t domid, uint64_t addr, uint32_t data)
@@ -426,7 +426,7 @@ index 7c89d11043b2..cd7c76dff93f 100644
 +EXPORT_SYMBOL(xen_ioemu_map_foreign_gfn_to_bfn);
 +EXPORT_SYMBOL(xen_ioemu_unmap_foreign_gfn_to_bfn);
 diff --git a/drivers/xen/mem-reservation.c b/drivers/xen/mem-reservation.c
-index 24648836e0d4..bce3ffc84df0 100644
+index 24648836e0d44..bce3ffc84df0f 100644
 --- a/drivers/xen/mem-reservation.c
 +++ b/drivers/xen/mem-reservation.c
 @@ -14,6 +14,7 @@
@@ -471,10 +471,10 @@ index 24648836e0d4..bce3ffc84df0 100644
  EXPORT_SYMBOL_GPL(__xenmem_reservation_va_mapping_reset);
 diff --git a/drivers/xen/pv-iommu-xen.c b/drivers/xen/pv-iommu-xen.c
 new file mode 100644
-index 000000000000..836082957dcf
+index 0000000000000..fe49e47166969
 --- /dev/null
 +++ b/drivers/xen/pv-iommu-xen.c
-@@ -0,0 +1,131 @@
+@@ -0,0 +1,130 @@
 +/*
 + *  Copyright 2014
 + *  by Malcolm Crossley <malcolm.crossley@citrix.com>
@@ -540,9 +540,8 @@ index 000000000000..836082957dcf
 +                        *phys_addr = phys;
 +		} else {
 +			phys_addr_t map = swiotlb_tbl_map_single(
-+						dev, p_io_tlb_mem->defpool.start,
-+						page_to_phys(page) + offset,
-+						size, 0, dir, attrs);
++						dev, page_to_phys(page) + offset,
++						size, size, 0, dir, attrs);
 +			trace_swiotlb_bounced(dev, phys, size);
 +			*phys_addr = phys_to_dma(dev, map);
 +		}
@@ -587,8 +586,8 @@ index 000000000000..836082957dcf
 +
 +		/* Check if device can DMA to bus address */
 +		if (!dma_capable(hwdev, dev_addr, sg->length, true)){
-+			phys_addr_t map = swiotlb_tbl_map_single(hwdev, p_io_tlb_mem->defpool.start,
-+						paddr, sg->length, 0, dir, attrs);
++			phys_addr_t map = swiotlb_tbl_map_single(hwdev,
++						paddr, sg->length, sg->length, 0, dir, attrs);
 +			trace_swiotlb_bounced(hwdev, dev_addr, sg->length);
 +			if (map == (phys_addr_t)DMA_MAPPING_ERROR) {
 +				dma_unmap_sg_attrs(hwdev, sgl, i, dir, attrs);
@@ -607,20 +606,20 @@ index 000000000000..836082957dcf
 +}
 +EXPORT_SYMBOL_GPL(xen_pv_iommu_map_sg_attrs);
 diff --git a/include/linux/swiotlb.h b/include/linux/swiotlb.h
-index ecde0312dd52..3e9849bc0548 100644
+index ecde0312dd520..3e9849bc05482 100644
 --- a/include/linux/swiotlb.h
 +++ b/include/linux/swiotlb.h
 @@ -154,6 +154,8 @@ static inline struct io_tlb_pool *swiotlb_find_pool(struct device *dev,
-
+ 
  #endif
-
+ 
 +struct io_tlb_mem *get_io_tlb_default_mem_addr(void);
 +
  /**
   * is_swiotlb_buffer() - check if a physical address belongs to a swiotlb
   * @dev:        Device which has mapped the buffer.
 diff --git a/include/xen/interface/elfnote.h b/include/xen/interface/elfnote.h
-index 38deb1214613..4ee494dc2cd3 100644
+index 38deb12146136..4ee494dc2cd35 100644
 --- a/include/xen/interface/elfnote.h
 +++ b/include/xen/interface/elfnote.h
 @@ -190,4 +190,16 @@
@@ -642,7 +641,7 @@ index 38deb1214613..4ee494dc2cd3 100644
  #endif /* __XEN_PUBLIC_ELFNOTE_H__ */
 diff --git a/include/xen/interface/pv-iommu.h b/include/xen/interface/pv-iommu.h
 new file mode 100644
-index 000000000000..8b765445f229
+index 0000000000000..8b765445f2297
 --- /dev/null
 +++ b/include/xen/interface/pv-iommu.h
 @@ -0,0 +1,100 @@
@@ -747,7 +746,7 @@ index 000000000000..8b765445f229
 + * End:
 + */
 diff --git a/include/xen/interface/xen.h b/include/xen/interface/xen.h
-index 0ca23eca2a9c..6a1b56f70b22 100644
+index 0ca23eca2a9cc..6a1b56f70b228 100644
 --- a/include/xen/interface/xen.h
 +++ b/include/xen/interface/xen.h
 @@ -76,6 +76,7 @@
@@ -759,7 +758,7 @@ index 0ca23eca2a9c..6a1b56f70b22 100644
   * VIRTUAL INTERRUPTS
   *
 diff --git a/include/xen/ioemu.h b/include/xen/ioemu.h
-index bf01c51dc973..f0c8f1794d77 100644
+index bf01c51dc9731..f0c8f1794d77f 100644
 --- a/include/xen/ioemu.h
 +++ b/include/xen/ioemu.h
 @@ -31,7 +31,10 @@
@@ -775,7 +774,7 @@ index bf01c51dc973..f0c8f1794d77 100644
  #endif /* #ifndef _XEN_IOEMU_H */
 diff --git a/include/xen/pv-iommu.h b/include/xen/pv-iommu.h
 new file mode 100644
-index 000000000000..4cff45ffaf8b
+index 0000000000000..4cff45ffaf8b3
 --- /dev/null
 +++ b/include/xen/pv-iommu.h
 @@ -0,0 +1,18 @@
@@ -798,7 +797,7 @@ index 000000000000..4cff45ffaf8b
 +
 +#endif /* __XEN_PVIOUMMU_H */
 diff --git a/include/xen/swiotlb-xen.h b/include/xen/swiotlb-xen.h
-index 808d17ad8d57..50d0d98ad260 100644
+index 808d17ad8d577..50d0d98ad260b 100644
 --- a/include/xen/swiotlb-xen.h
 +++ b/include/xen/swiotlb-xen.h
 @@ -10,6 +10,12 @@ void xen_dma_sync_for_cpu(struct device *dev, dma_addr_t handle,
@@ -815,7 +814,7 @@ index 808d17ad8d57..50d0d98ad260 100644
 +
  #endif /* __LINUX_SWIOTLB_XEN_H */
 diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index e323ca48f7f2..2978773eef13 100644
+index f1d9f01b283d7..26440a725cb25 100644
 --- a/kernel/dma/mapping.c
 +++ b/kernel/dma/mapping.c
 @@ -14,6 +14,7 @@
@@ -868,10 +867,10 @@ index e323ca48f7f2..2978773eef13 100644
  		return 0;
  	return ret;
 diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index 2048194a03be..cf86c14077cb 100644
+index e7c3fbd0737ec..cb5d221da9ce7 100644
 --- a/kernel/dma/swiotlb.c
 +++ b/kernel/dma/swiotlb.c
-@@ -115,6 +115,11 @@ struct io_tlb_area {
+@@ -118,6 +118,11 @@ struct io_tlb_area {
  	spinlock_t lock;
  };
  
@@ -884,7 +883,7 @@ index 2048194a03be..cf86c14077cb 100644
   * Round up number of slabs to the next power of 2. The last area is going
   * be smaller than the rest if default_nslabs is not power of two.
 diff --git a/kernel/ksysfs.c b/kernel/ksysfs.c
-index 1d4bc493b2f4..0e7217c8c0fc 100644
+index 1d4bc493b2f4b..0e7217c8c0fcb 100644
 --- a/kernel/ksysfs.c
 +++ b/kernel/ksysfs.c
 @@ -20,6 +20,7 @@
@@ -917,4 +916,4 @@ index 1d4bc493b2f4..0e7217c8c0fc 100644
 +	&pv_iommu_ready_attr.attr,
  	NULL
  };
-
+ 

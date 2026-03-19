@@ -2,13 +2,21 @@
 
 # Backports from upstream
 #
+# 4b0ebbca3e1679765c06d5c466ee7f3228d4b156 (6.10-rc1)
+0001-net-gro-move-L3-flush-checks-to-tcp_gro_receive-and-.patch
 # ad162488bbd359abda99c9819f5cbe9172f40935 (6.10-rc6)
 0001-x86-xen-time-Reduce-Xen-timer-tick.patch
+# c73e54dba1074f136b5061618825e916e5cb47a (6.6.103)
+0001-sched-fair-Bump-sd-max_newidle_lb_cost-when-newidle-.patch
+
+#
+# Disable security mitigations
+#
+disable-mitigations-by-default.patch
 
 #
 # Build system integration
 #
-kbuild-AFTER_LINK.patch
 expose-xsversion.patch
 
 #
@@ -56,8 +64,10 @@ kexec-reserve-crashkernel-region.patch
 #
 # Performance optimizations
 #
+0001-Revert-to-use-num_online_cpus-for-default-rss-queues.patch
 
 # GFS2
+GFS2__Avoid_recently_demoted_rgrps
 gfs2-debug-rgrp-sweep
 0001-fix-gfs2-umount-timeout-bug.patch
 # https://lore.kernel.org/all/20250716213131.524126-1-agruenba@redhat.com/
@@ -78,6 +88,7 @@ allow_reading_xen_netback_ring.patch
 import-xen-public-headers.patch
 filter-hypercalls.patch
 module-hash-revocation.patch
+gfs2-fix-debugfs-access.patch
 
 #
 # Debugging

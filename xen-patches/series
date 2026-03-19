@@ -1,4 +1,4 @@
-# Apply on top of RELEASE-4.20.1
+# Apply on top of RELEASE-4.20.2
 
 # XenServer patch queue on top of xen.git
 #    Upstream at git://xenbits.xen.org/xen.git
@@ -38,7 +38,6 @@
 # XenServer build system integration
 #
 build-tweaks.patch # Tweak version string, start-of-day banner and changeset
-autoconf-libjson.patch
 
 configure-build.patch # Configuration files for the build, including cached ./configure
 xenserver-configuration.patch
@@ -51,21 +50,26 @@ coverity-model.patch
 #   A '*' indicates a patch which should be suggested for backport upstream
 
 # Patches from staging-4.20
-backport-6d0b94a461e2.patch #   2025-07-22 08:50:14 - x86/mwait-idle: Add AlderLake-N support
-backport-53939e22c2de.patch #   2025-07-22 08:50:49 - x86/mwait-idle: add Emerald Rapids Xeon support
-backport-733dd6588818.patch #   2025-07-22 08:51:05 - x86/mwait-idle: Add Meteorlake support
-backport-a4dd64ea8155.patch #   2025-07-22 08:51:20 - x86/mwait-idle: add Grand Ridge SoC support
-backport-a634a48b48e3.patch #   2025-07-22 08:51:38 - x86/mwait-idle: add Sierra Forest SoC support
-backport-1345e248690a.patch #   2025-07-22 08:51:51 - x86/mwait-idle: add Granite Rapids Xeon support
-backport-76281c34cd99.patch #   2025-07-22 08:52:06 - x86/mwait-idle: add Granite Rapids Xeon D support
-backport-60186d6f5f6e.patch #   2025-07-22 08:52:33 - x86/mwait-idle: add Clearwater Forest SoC support
-backport-c75f3aea50cb.patch #   2025-07-22 08:54:21 - x86/ept: move vmx_domain_flush_pml_buffers() to p2m-ept.c
-backport-c7f876c99301.patch #   2025-07-22 08:54:44 - x86/ept: batch PML p2m type-changes into single locked region
-backport-73eaac394c31.patch #   2025-07-22 08:55:07 - x86/idle: Fix the C6 eoi_errata[] list to include NEHALEM_EX
-backport-2fd3628fa6c4.patch #   2025-07-31 08:51:13 - x86/svm: Always flush TLB using TLB_CTRL_FLUSH_ALL
-backport-5f83f721fb62.patch #   2025-09-09 12:20:46 - x86/viridian: avoid NULL pointer dereference in update_reference_tsc()
-backport-c5ecaf0200b3.patch #   2025-09-09 12:21:22 - x86/viridian: avoid NULL pointer dereference in viridian_synic_deliver_timer_msg()
-backport-665a641471ef.patch #   2025-09-09 12:21:36 - x86/viridian: protect concurrent modification of the reference TSC page
+backport-e2b5544a9298.patch #   2025-11-25 08:37:01 - x86/ucode: Add extra rows to the entrysign model table (again)
+backport-1badcf503507.patch #   2025-11-25 08:37:47 - x86/ucode: Fix error handling during parallel ucode load
+backport-9fb2b66c60a5.patch #   2025-12-03 10:43:36 - x86/msix: fix incorrect refcount decrease in msixtlb
+backport-601bbb00d267.patch #   2025-12-03 10:43:57 - x86/vhpet: Fix sanitization of legacy IRQ route
+backport-f5b36e23ec45.patch #   2025-12-03 10:44:12 - x86/amd: Stop updating the Zenbleed mitigation dynamically
+backport-bb897593b7a7.patch #   2025-12-03 10:44:35 - x86/amd: Fix race editing DE_CFG
+backport-a13ce6cee8ea.patch #   2026-01-13 14:44:43 - x86/pod: fix decrease_reservation() clearing of M2P entries
+backport-c31086c50b9d.patch #   2026-01-13 14:45:05 - x86/mm: update log-dirty bitmap when manipulating P2M
+backport-23989412fb76.patch #   2026-01-13 14:45:31 - xen/x86: Pass TPM ACPI table to PVH dom0
+backport-219510a9d6ae.patch #   2026-01-13 14:46:23 - x86/hvm: be more strict with XENMAPSPACE_gmfn source types
+backport-39748952e917.patch #   2026-01-13 14:46:37 - xen/mm: move adjustment of claimed pages counters on allocation
+backport-0cb467d86df3.patch #   2026-01-13 14:47:17 - x86: fix incorrect return value for has_if_pschange_mc
+backport-f63a5ba705b9.patch #   2026-01-27 13:03:48 - x86/shadow: don't overrun trace_emul_write_val
+backport-f48e4904ab81.patch #   2026-01-27 13:04:20 - x86/spec-ctrl: Fix incomplete IBPB flushing during context switch
+backport-95c476191fbb.patch #   2026-01-29 12:43:29 - xen/domain: Disallow XENMEM_claim_pages on dying domains
+backport-36bea7790339.patch #   2026-01-29 12:44:05 - x86/time: deal with negative deltas in get_s_time_fixed()
+backport-7e10bb1501c0.patch #   2026-02-11 11:19:30 - xen/mm: remove aliasing of PGC_need_scrub over PGC_allocated
+backport-b304f9484272.patch #   2026-02-11 11:19:54 - xen/mm: allow deferred scrub of physmap populate allocated pages
+backport-6143f6f64d45.patch #   2026-02-11 11:20:17 - x86/domain: adjust limitation on shared_info allocation below 4G
+backport-80ff08137eac.patch #   2026-02-11 11:20:39 - xen/kexec: return error code for unknown hypercalls
 
 # Patches from staging, 4.21 dev cycle
 backport-70c933d44f71.patch #   2025-02-25 08:28:38 - x86/ucode: Add option to scan microcode by default
@@ -74,37 +78,66 @@ backport-9a474fcceccf.patch #   2025-03-10 15:05:09 - xen/watchdog: Identify whi
 backport-8e60d47cf011.patch #   2025-03-12 12:32:31 - x86/iommu: avoid MSI address and data writes if IRT index hasn't changed
 backport-c9f62baee892.patch #   2025-03-20 08:27:25 - x86/msi: always propagate MSI writes when not in active system mode
 backport-b3bf9646101e.patch #   2025-03-20 08:27:25 - x86/msi: always propagate MSI register writes from __setup_msi_irq()
-backport-15341fcac766.patch #   2025-03-31 14:38:56 - x86emul: Fix blowfish build in 64bit-clean environments
-backport-a05598bd1264.patch #   2025-04-17 08:59:41 - EFI: Avoid crash calling PrintErrMesg from efi_multiboot2
-backport-aea52ce607fe.patch #   2025-05-06 23:56:00 - xen/sha2: Export additional sha256 functions
-backport-ed9488a0d155.patch #   2025-05-08 10:43:56 - lib: Add strcspn function
-backport-4c3ce492ede1.patch #   2025-05-13 18:43:48 - livepatch: Pass buffer size to list sysctl
+backport-15341fcac766.patch #   2025-03-31 13:38:56 - x86emul: Fix blowfish build in 64bit-clean environments
+backport-a05598bd1264.patch #   2025-04-17 07:59:41 - EFI: Avoid crash calling PrintErrMesg from efi_multiboot2
+backport-aea52ce607fe.patch #   2025-05-06 22:56:00 - xen/sha2: Export additional sha256 functions
+backport-ed9488a0d155.patch #   2025-05-08 09:43:56 - lib: Add strcspn function
+backport-4c3ce492ede1.patch #   2025-05-13 17:43:48 - livepatch: Pass buffer size to list sysctl
 backport-50bbacacb814.patch #   2025-05-15 08:20:14 - x86/p2m: limit cache flush in memory_type_changed()
 backport-3125ca0da2d8.patch #   2025-05-20 14:35:52 - x86/hvm: limit memory type cache flush to running domains
 backport-2d779cabddfa.patch #   2025-05-20 14:35:52 - x86/hvm: reduce the need to flush caches in memory_type_changed()
-backport-2d497e97e20e.patch #   2025-05-28 12:29:33 - tools/tests: Install tests into $(LIBEXEC)/tests
-backport-e773c257af85.patch #   2025-05-30 15:18:46 - tools: Add install/uninstall targets to tests/x86_emulator
-backport-96a587a05736.patch #   2025-05-30 15:18:47 - tools/tests: Add install target for vPCI
-backport-eac626eb4c9f.patch #   2025-06-11 10:06:02 - public/sysctl: Clarify usage of pm_{px,cx}_stat
-backport-5f31c46139be.patch #   2025-06-13 15:47:18 - x86/hvm: Process pending softirqs while dumping VMC[SB]s
+backport-2d497e97e20e.patch #   2025-05-28 11:29:33 - tools/tests: Install tests into $(LIBEXEC)/tests
+backport-e773c257af85.patch #   2025-05-30 14:18:46 - tools: Add install/uninstall targets to tests/x86_emulator
+backport-96a587a05736.patch #   2025-05-30 14:18:47 - tools/tests: Add install target for vPCI
+backport-eac626eb4c9f.patch #   2025-06-11 09:06:02 - public/sysctl: Clarify usage of pm_{px,cx}_stat
+backport-5f31c46139be.patch #   2025-06-13 14:47:18 - x86/hvm: Process pending softirqs while dumping VMC[SB]s
 backport-22650d605462.patch #   2025-06-18 07:30:11 - x86/hvmloader: select xen platform pci MMIO BAR UC or WB MTRR cache attribute
-backport-e83364bc5147.patch #   2025-06-24 13:55:29 - xen/efi: Show error message for EFI_INVALID_PARAMETER error
-backport-196cdc097ff1.patch #   2025-06-26 13:58:10 - xen/efi: Handle cases where file didn't come from ESP
-backport-32b63424e4e4.patch #   2025-07-29 17:25:54 - x86/EFI: Fix detection of buildid
-backport-7909fd5e7847.patch #   2025-07-29 17:25:54 - tools/flask: Use tabs uniformly
-backport-e5eeca2fcaa3.patch #   2025-07-29 17:25:54 - tools/flask: Reformat allow declarations
-backport-1db7829e5657.patch #   2025-08-06 08:47:16 - x86/hpet: do local APIC EOI after interrupt processing
+backport-623c365951f9.patch #   2025-06-23 08:50:13 - xen/efi: Do not check kernel signature if it was embedded
+backport-e83364bc5147.patch #   2025-06-24 12:55:29 - xen/efi: Show error message for EFI_INVALID_PARAMETER error
+backport-196cdc097ff1.patch #   2025-06-26 12:58:10 - xen/efi: Handle cases where file didn't come from ESP
+backport-32b63424e4e4.patch #   2025-07-29 16:25:54 - x86/EFI: Fix detection of buildid
+backport-7909fd5e7847.patch #   2025-07-29 16:25:54 - tools/flask: Use tabs uniformly
+backport-e5eeca2fcaa3.patch #   2025-07-29 16:25:54 - tools/flask: Reformat allow declarations
+backport-a492ec7b01ee.patch #   2025-07-30 10:03:59 - xen/efi: Reduce variable scope to avoid compiler warning
 backport-b541c627b227.patch #   2025-08-11 16:45:05 - kconfig: turn PDX compression into a choice
 backport-fd23bc59c2db.patch #   2025-08-11 16:45:33 - pdx: provide a common set of init functions
 backport-31d9c88a3857.patch #   2025-08-11 16:45:52 - pdx: introduce command line compression toggle
 backport-bd0b3a876d80.patch #   2025-08-11 16:45:52 - pdx: allow per-arch optimization of PDX conversion helpers
 backport-cb50e4033717.patch #   2025-08-11 16:45:52 - test/pdx: add PDX compression unit tests
 backport-353e5952943f.patch #   2025-08-11 16:45:52 - pdx: move some helpers in preparation for new compression
-backport-7fddedd53056.patch #   2025-08-12 10:40:28 - efi: Call FreePages() only if needed
 backport-c5c45bcbd6a1.patch #   2025-08-18 12:01:10 - pdx: introduce a new compression algorithm based on region offsets
-backport-c292772b4945.patch #   2025-08-21 09:57:25 - x86/iommu: setup MMCFG ahead of IOMMU
-backport-382dd0d166cb.patch #   2025-09-25 14:07:05 - x86/cpu: populate CPUID 0x1.edx features early for self-snoop detection
-backport-50baf2d9f7bb.patch #   2025-09-29 20:32:37 - tools/libs/guest: Use superpages where possible on migrate/resume
+backport-f5aadd575bb5.patch #   2025-09-04 12:26:38 - libxl: Remove duplicate libxl_domain_config_gen_json prototype
+backport-ccb11468b69f.patch #   2025-09-04 12:26:44 - libxl: remove duplicated libxl__yajl_gen_asciiz() prototype
+backport-cb41b4ce14a9.patch #   2025-09-05 22:45:38 - efi: Add a function to check if Secure Boot mode is enabled
+backport-59a1d6d3ea1e.patch #   2025-09-05 22:45:38 - efi: Support using Shim's LoadImage protocol
+backport-85d7fe2e14e5.patch #   2025-09-25 14:01:36 - efi: Fix line length in init_secure_boot_mode
+backport-38a5e0d0317b.patch #   2025-09-25 14:02:14 - efi: Limit Shim's Verify success to EFI_SUCCESS
+backport-50baf2d9f7bb.patch #   2025-09-29 19:32:37 - tools/libs/guest: Use superpages where possible on migrate/resume
+backport-bb3da1c885ff.patch #   2025-10-06 11:28:43 - tools/configure: Introduce deps on json-c lib for libxl
+backport-7e95dab9eb63.patch #   2025-10-06 11:28:43 - libxl: Convert libxl__json_parse() to use json-c
+backport-a6fd4a1c55dd.patch #   2025-10-06 11:36:44 - libxl: Convert libxl__json_object_to_yajl_gen to libxl__json_object_to_libjsonc_object
+backport-f6c6f2679d49.patch #   2025-10-06 11:36:50 - libxl: Convert libxl__object_to_json() to json-c
+backport-75fa670e582c.patch #   2025-10-06 11:36:55 - libxl: Convert libxl__json_object_to_json() to json_object
+backport-c4abe30ca6e4.patch #   2025-10-06 11:36:59 - tools/libxenstat: Use json-c when available
+backport-c71d8ef0cca3.patch #   2025-10-06 11:36:59 - configure: Use json-c by default, fallback to yajl
+backport-5d492ce33d66.patch #   2025-10-14 17:31:43 - efi: Protect against unnecessary image unloading
+backport-98cdab167938.patch #   2025-10-16 15:20:10 - tools/{lib,}xl: fix usage of error return from json_tokener_parse_verbose()
+backport-3539308d8206.patch #   2025-10-16 15:20:18 - tools/libxl: avoid freeing stack rubble in libxl__json_object_to_json()
+backport-a4d92cf18955.patch #   2025-10-16 15:20:27 - tools/xl: check return of json_object_object_add()
+backport-d0193c6d6716.patch #   2025-10-16 15:20:32 - tools/xl: check return value of printf_info_one_json() in list_domains_details()
+backport-439ebb08081f.patch #   2025-10-16 15:20:38 - tools/xl: fix possible uninitialized usage in printf_info()
+backport-80fb43a1b583.patch #   2025-10-21 15:56:35 - tools/xl: fix for dead code in list_domains_details()
+
+# Patches from staging, 4.22 dev cycle
+backport-dcfcc4acabf9.patch #   2025-12-01 16:20:41 - x86/amd: Use setup_force_cpu_cap() for BTC_NO
+backport-7672602df6c0.patch #   2025-12-17 17:35:24 - tools/libxc: Delete ENOSYS squashing in xc_domain_claim_pages()
+backport-04ebc7b527a7.patch #   2025-12-17 17:35:24 - tools/tests: Sort Makefile
+backport-f34c96528110.patch #   2025-12-17 17:35:24 - tools/tests: Memory Claims
+backport-a76278016ef7.patch #   2026-01-07 17:24:51 - libs/xg: allow caller to provide extra memflags for populate physmap
+backport-381b4ff16f7f.patch #   2026-02-05 20:27:40 - tools/ocaml: fix 32-bit truncation bug in stub_xc_domain_setmaxmem()
+
+xsa480.patch # x86/p2m: issue a sync flush before freeing paging pages
+xsa481.patch # tools/xenstored: fix canonicalize() error testing
 
 ################################################################################
 # Patches for upstream
@@ -141,6 +174,11 @@ xen-hide-AVX512-on-SKX-by-default.patch
 
 # memory scrubbing
 0001-common-page_alloc-don-t-idle-scrub-before-microcode-.patch
+
+# Migration performance fixes
+avoid-domctl-lock.patch
+tlb-flush-1.patch
+tlb-flush-2.patch
 
 ################################################################################
 # Un-upstreamable patches
@@ -196,6 +234,17 @@ mixed-domain-runstates.patch
 xenguest.patch
 xen-vmdebug.patch
 
+# NUMA aware claims
+0003-xen-page_alloc-Add-static-per-NUMA-node-counts-of.patch
+0005-xen-page_alloc-Implement-per-NUMA-node-outstandin.patch
+tools-xc_domain_claim_pages_node.patch
+add-domain_adjust_tot_pages-param.patch
+add-domain-node_tot_pages.patch
+tools-xc_domain_numa_get_node_pages.patch
+add-avail_node_heap_pages-param.patch
+ocaml-numa_get_distances.patch
+tools-xc_numa_meminfo.patch
+
 # Fix xenguest stealing PCI MMIO memory
 0001-x86-hvmloader-account-for-external-components-consum.patch
 
@@ -242,7 +291,6 @@ move-trampoline-to-data-section.patch
 correct-sections-permissions.patch
 
 # Implement a lockdown mode
-add-secure-boot-mode.patch
 add-lockdown-mode.patch
 disallow-most-command-line-options.patch
 
@@ -266,6 +314,7 @@ restrict-arbitrary-iomem-mapping.patch
 # in dom0
 skip-flask-call.patch
 public-abi.patch
+elf-note-filtering.patch
 
 ################################################################################
 # Debugging patches
